@@ -1,20 +1,20 @@
-from todomvc_testing.model import app
+from todomvc_testing.model import todomvc
 
 
 def test_basic_management():
-    app.visit()
+    todomvc.visit()
 
-    app.add('a', 'b', 'c')
-    app.should_have('a', 'b', 'c')
+    todomvc.add('a', 'b', 'c') \
+        .should_have('a', 'b', 'c')
 
-    app.edit('b', 'b edited')
+    todomvc.edit('b', 'b edited')
 
-    app.toggle('b edited')
+    todomvc.toggle('b edited')
 
-    app.clear_completed()
-    app.should_have('a', 'c')
+    todomvc.clear_completed() \
+        .should_have('a', 'c')
 
-    app.cancel_editing('c', 'c to be canceled')
+    todomvc.cancel_editing('c', 'c to be canceled')
 
-    app.delete('c')
-    app.should_have('a')
+    todomvc.delete('c') \
+        .should_have('a')
