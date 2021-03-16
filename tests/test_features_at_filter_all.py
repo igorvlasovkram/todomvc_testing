@@ -1,29 +1,5 @@
 from todomvc_testing.model import todomvc
 
-"""
-    Supposition:
-1. Using Application Manager is irrelevant in this case.
-
-2.Fluent PageObject is used here as improving readability and pleasant for me
-tool. 
-
-3. Using Widgets is an excessive and irrelevant complication in this case.
-
-4. Verification of footer state is not relevant for high-level system tests.
-
-5. Explicite verification of following below items is not needed because:
-- visibility of "clear-complete" button, because I do it implicitly in
-"test_clear_completed"
-- invisibility of "clear-complete" button - the result of grey-box reseach
-is this UI element doesn't relate with result of app operation perform, that's
-why this verification doesn't match homework condition "... покрой все ОПЕРАЦИИ
-на фильтре ...", at first, and this verification is not relevant for high-level
-system tests, secondly.
-
-6. In "test_complete_all" operation "toggle('b')" is added for simulation more
-real situation.
-"""
-
 
 def test_add_one():
     todomvc.visit()
