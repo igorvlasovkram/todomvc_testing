@@ -16,6 +16,35 @@ class TodoMvc:
             "Object.keys(require.s.contexts._.defined).length === 39"))
         return self
 
+    def given_opened_with(self, *todos, completed):
+        browser.open('https://todomvc4tasj.herokuapp.com/')
+        for todo in todos:
+            json_string = '[{\"completed\":false,\"title\":\"' + todo + '\"}]'
+            if todo == completed:
+                json_string.replace('false', 'true')
+                browser.execute_script(
+                    f"localStorage['todos-troopjs'] = {json_string}"
+                )
+            else:
+                browser.execute_script(
+                    f"localStorage['todos-troopjs'] = {json_string}"
+                )
+        return self
+
+    def open_via_js(self):
+        browser.open('https://todomvc4tasj.herokuapp.com/')
+        browser.execute_script(
+            '''
+            localStorage['todos-troopjs'] = "[{\'completed\':true,\'title\':\'a\'}]"
+            '''
+        )
+        browser.execute_script(
+            '''
+            location.reload()
+            '''
+        )
+        return self
+
     def add(self, *todos: str):
         for todo in todos:
             browser.element('#new-todo').type(todo).press_enter()
