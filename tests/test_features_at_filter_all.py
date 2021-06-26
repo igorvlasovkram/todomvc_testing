@@ -1,3 +1,4 @@
+from todomvc_testing.helpers.js_script_creation import Todo
 from todomvc_testing.model import todomvc
 
 """
@@ -93,7 +94,7 @@ def test_activate():
 
 
 def test_complete_all():
-    todomvc.given_opened_with('a', ('b', 'completed'), 'c')
+    todomvc.given_opened_with('a', Todo('b', 'completed'), 'c')
 
     todomvc.toggle_all()
 
