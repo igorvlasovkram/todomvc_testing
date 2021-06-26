@@ -1,6 +1,8 @@
 from selene import have
 from selene.support.shared import browser
 
+from todomvc_testing.helpers.js_script_creation import Todo
+
 
 class TodoMvc:
     def __init__(self):
@@ -16,33 +18,23 @@ class TodoMvc:
             "Object.keys(require.s.contexts._.defined).length === 39"))
         return self
 
-    def given_opened_with(self, *todos, completed):
+    def given_opened_with(self, *properties):
         browser.open('https://todomvc4tasj.herokuapp.com/')
-        for todo in todos:
-            json_string = '[{\"completed\":false,\"title\":\"' + todo + '\"}]'
-            if todo == completed:
-                json_string.replace('false', 'true')
-                browser.execute_script(
-                    f"localStorage['todos-troopjs'] = {json_string}"
-                )
+        draft_whole_json = ''
+        for property_ in properties:
+            if isinstance(property_, str):
+                string = Todo(property_[0], 'active').to_json()
             else:
-                browser.execute_script(
-                    f"localStorage['todos-troopjs'] = {json_string}"
-                )
-        return self
+                string = Todo(property_[0], property_[1]).to_json()
+            draft_whole_json += string
+        finish_whole_json = '[' + draft_whole_json[:-1] + ']'
 
-    def open_via_js(self):
-        browser.open('https://todomvc4tasj.herokuapp.com/')
         browser.execute_script(
-            '''
-            localStorage['todos-troopjs'] = "[{\'completed\':true,\'title\':\'a\'}]"
-            '''
-        )
-        browser.execute_script(
-            '''
+            f'''
+            localStorage['todos-troopjs'] = '{finish_whole_json}';
             location.reload()
             '''
-        )
+            )
         return self
 
     def add(self, *todos: str):

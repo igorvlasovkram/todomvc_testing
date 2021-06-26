@@ -92,14 +92,8 @@ def test_activate():
         .should_have_items_left(1)
 
 
-def test():
-    todomvc.open_via_js()
-
-    todomvc.should_have('a')
-
-
 def test_complete_all():
-    todomvc.given_opened_with('a', 'b', 'c', completed='b')
+    todomvc.given_opened_with('a', ('b', 'completed'), 'c')
 
     todomvc.toggle_all()
 
